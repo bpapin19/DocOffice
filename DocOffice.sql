@@ -3,17 +3,6 @@ create database DocOffice;
 
 use DocOffice;
 
-DROP TABLE IF EXISTS PATIENT;
-CREATE TABLE PATIENT (
-  pat_fname    varchar(25) not null,
-  pat_lname    varchar(25) not null,
-  ssn          char(9) not null,
-  patId		   char(10) not null,   
-  lastVisit	   date,
-  phone        char(12) not null,
-  PRIMARY KEY  (patId, ssn)				   #composite key
-);
-
 DROP TABLE IF EXISTS DOCTOR;
 CREATE TABLE DOCTOR (
   doc_fname       varchar(25) not null,
@@ -22,6 +11,18 @@ CREATE TABLE DOCTOR (
   ssn             char(9) not null,
   docId		      char(6) not null,   
   PRIMARY KEY     (docId, ssn)				#composite key   
+);
+
+DROP TABLE IF EXISTS PATIENT;
+CREATE TABLE PATIENT (
+  pat_fname    varchar(25) not null,
+  pat_lname    varchar(25) not null,
+  ssn          char(9)     not null,
+  patId		   char(10)    not null,   
+  lastVisit	   date,
+  phone        char(12)    not null,
+  doc_ssn	   char(9)     not null,
+  PRIMARY KEY  (patId, ssn)				   #composite key
 );
 
 DROP TABLE IF EXISTS PRESCRIPTION;
@@ -69,10 +70,14 @@ CREATE TABLE SEEN (
 );
 
 
-INSERT INTO PATIENT VALUES ('Jacob','Schneider','444333222','1234512345','2019-01-17', '714-900-6598');
-INSERT INTO PATIENT VALUES ('Mark','Roberts','444555666','1878784833','2018-04-29', '616-978-8865');
-INSERT INTO PATIENT VALUES ('Vanessa','Lin','309222576','9984562331','2019-09-10', '714-332-1008');
-INSERT INTO PATIENT VALUES ('Jeremy','Prendo','404553229','9555400782','2019-11-16', '410-779-4437');
+INSERT INTO PATIENT VALUES ('Jacob','Schneider','444333222','1234512345','2019-01-17', '714-900-6598','910319844' );
+INSERT INTO PATIENT VALUES ('Mark','Roberts','444555666','1878784833','2018-04-29', '616-978-8865', '334660082');
+INSERT INTO PATIENT VALUES ('Vanessa','Lin','309222576','9984562331','2019-09-10', '714-332-1008', '910319844');
+INSERT INTO PATIENT VALUES ('Jeremy','Prendo','404553229','9555400782','2019-11-16', '410-779-4437', '910319844');
+INSERT INTO PATIENT VALUES ('Gerald','Botswang','48759643','3204657855','2019-10-09', '909-897-7458', '344882061');
+INSERT INTO PATIENT VALUES ('Cole','Yarn','785469835','7854975623','2018-10-19', '878-242-5124', '344882061');
+INSERT INTO PATIENT VALUES ('Higley','Rimble','120458726','785444978','2018-07-10', '714-889-2035', '100745333');
+INSERT INTO PATIENT VALUES ('Vanhilda','Burg','332556987','023489754','2019-03-31', '909-337-8956', '100745333');
 
 INSERT INTO DOCTOR VALUES ('Frank','Ocean','eyes','334660082','FR9999');
 INSERT INTO DOCTOR VALUES ('Robert','Stevens','lungs','910319844','RO8888');
@@ -166,3 +171,21 @@ INSERT INTO OFFICE VALUES ('2950 Catalina Ct', 1600, 'building',
 INSERT INTO OFFICE VALUES ('2950 Catalina Ct', 1600, 'building', 
 (select docId from DOCTOR where docId = 'JO6666')); 
 
+
+
+
+
+###################################################################
+# Views
+###################################################################
+# 2 In Requirements
+CREATE VIEW  robertsPatients AS	
+SELECT patient.pat_fname, patient.pat_lname, patient.phone
+FROM patientrobertspatients
+WHERE patient.doc_ssn = "910319844";
+
+
+
+# 3 In Requirements 
+# CREATE VIEW vicodinDoctors AS 
+# SELECT 
