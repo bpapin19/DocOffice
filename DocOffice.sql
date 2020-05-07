@@ -166,3 +166,39 @@ INSERT INTO OFFICE VALUES ('2950 Catalina Ct', 1600, 'building',
 INSERT INTO OFFICE VALUES ('2950 Catalina Ct', 1600, 'building', 
 (select docId from DOCTOR where docId = 'JO6666')); 
 
+# TRIGGER AFTER INSERT
+create trigger Doc_Spec_Trigger_INSERT 
+after INSERT
+on DOCTORSPECIALTY  
+for each row  
+INSERT INTO AUDIT VALUES (
+(select doc_fname from DOCTOR where docId in 
+(select doc_Id from DOCTORSPECIALTY where doc_Id = NEW.doc_Id)),
+'insert', 
+(select specialty from DOCTORSPECIALTY where doc_Id = NEW.doc_Id), 
+(NOW()) 
+); 
+
+# TRIGGER AFTER UPDATE
+create trigger Doc_Spec_Trigger_UPDATE
+after UPDATE
+on DOCTORSPECIALTY  
+for each row  
+INSERT INTO AUDIT VALUES (
+(select doc_fname from DOCTOR where docId in 
+(select doc_Id from DOCTORSPECIALTY where doc_Id = NEW.doc_Id)),
+'update', 
+(select specialty from DOCTORSPECIALTY where doc_Id = NEW.doc_Id), 
+(NOW()) 
+); 
+
+# INSERT INTO DOCSPECIALTY
+INSERT INTO DOCTORSPECIALTY VALUES ('muscles', 'JO6666');
+INSERT INTO DOCTORSPECIALTY VALUES ('eyes', 'DR7777');
+INSERT INTO DOCTORSPECIALTY VALUES ('skin', 'FR9999');
+INSERT INTO DOCTORSPECIALTY VALUES (null, 'RO8888');
+#INSERT INTO DOCTORSPECIALTY VALUES ('joints', 'JO6666');
+
+
+
+
