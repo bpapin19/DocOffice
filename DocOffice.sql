@@ -195,3 +195,11 @@ WHERE doctor.docId =
 CREATE VIEW doctorsSpecalties AS
 SELECT doctor.doc_fname, doctor.doc_lname, doctor.specialty
 FROM doctor
+WHERE doctor.specialty IS NOT NULL;
+
+# 5 in Requirements
+CREATE VIEW doctorsSpecaltiesWithNULL AS
+SELECT doctor.doc_fname, doctor.doc_lname, doctor.specialty
+FROM doctor;
+
+# 6 in Requirments
