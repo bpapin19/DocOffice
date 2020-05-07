@@ -184,9 +184,14 @@ WHERE patient.doc_ssn = "910319844";
 
 # 3 In Requirements 
 CREATE VIEW vicodinDoctors AS 
-SELECT doctor.doc_fname, doc_lname
+SELECT doctor.doc_fname, doctor.doc_lname
 FROM doctor
 WHERE doctor.docId = 
 (	SELECT prescription.doc_Id
 	FROM prescription
 	WHERE scriptname = "Vicodin");
+    
+# 4 In Requirements
+CREATE VIEW doctorsSpecalties AS
+SELECT doctor.doc_fname, doctor.doc_lname, doctor.specialty
+FROM doctor
