@@ -172,20 +172,21 @@ INSERT INTO OFFICE VALUES ('2950 Catalina Ct', 1600, 'building',
 (select docId from DOCTOR where docId = 'JO6666')); 
 
 
-
-
-
 ###################################################################
 # Views
 ###################################################################
 # 2 In Requirements
 CREATE VIEW  robertsPatients AS	
 SELECT patient.pat_fname, patient.pat_lname, patient.phone
-FROM patientrobertspatients
+FROM patient
 WHERE patient.doc_ssn = "910319844";
 
 
-
 # 3 In Requirements 
-# CREATE VIEW vicodinDoctors AS 
-# SELECT 
+CREATE VIEW vicodinDoctors AS 
+SELECT doctor.doc_fname, doc_lname
+FROM doctor
+WHERE doctor.docId = 
+(	SELECT prescription.doc_Id
+	FROM prescription
+	WHERE scriptname = "Vicodin");
